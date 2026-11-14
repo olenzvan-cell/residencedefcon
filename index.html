@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт с боковым меню</title>
+    <style>
+        /* Базовые настройки страницы */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Иконка «три палки» (гамбургер) */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 22px;
+        }
+
+        .menu-btn span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #333;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Выезжающее боковое окно */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 280px;
+            max-width: 45vw;
+            background-color: #ffffff;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+            padding: 80px 12px 20px 12px;
+            transform: translateX(-100%);
+            transition: transform 0.35s ease-in-out;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Класс для открытого состояния */
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        /* Кнопки внутри меню */
+        .sidebar button {
+            background-color: #f0f2f5;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 12px;
+            text-align: left;
+            font-size: 15px;
+            line-height: 1.3;
+            color: #222;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            width: 100%;
+        }
+
+        .sidebar button:hover {
+            background-color: #e2e6ea;
+        }
+
+        /* Подсветка активной (выбранной) вкладки */
+        .sidebar button.active {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        /* Основной контент страницы */
+        .main-content {
+            padding: 90px 25px 40px 25px;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .main-content h1 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: #111;
+        }
+
+        .main-content p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* Скрытие неактивных экранов */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Кнопка с тремя полосками -->
+    <button class="menu-btn" id="menuToggle" aria-label="Открыть меню">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Боковая панель -->
+    <nav class="sidebar" id="sidebar">
+        <button type="button" class="nav-tab active" data-target="world">Мир</button>
+        <button type="button" class="nav-tab" data-target="news">Новости</button>
+        <button type="button">США</button>
+        <button type="button">Велико-<br>британия</button>
+        <button type="button">Франция</button>
+        <button type="button">Россия</button>
+    </nav>
+
+    <!-- Основная часть сайта -->
+    <main class="main-content">
+        <!-- Вкладка Мир -->
+        <section id="world" class="tab-content active">
+            <h1>Мир.</h1>
+            <p>Участники: Платон — Франция, Святослав — Великобритания, Егор — США, Константин — Россия</p>
+        </section>
+
+        <!-- Вкладка Новости -->
+        <section id="news" class="tab-content">
+            <h1>Новости</h1>
+            <p>13 ноября 2026 года США подписала мирный договор с Великобританией.</p>
+            <p>В договор входят: торговля, экономическая взаимовыгода, финансовая и военная помощь во время военных действий.</p>
+            <p>Срок 60 дней.</p>
+        </section>
+    </main>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        // Открытие/закрытие бокового меню
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Переключение между рабочими вкладками (Мир и Новости)
+        navTabs.forEach(button => {
+            button.addEventListener('click', () => {
+                // Убираем подсветку со всех рабочих кнопок
+                navTabs.forEach(btn => btn.classList.remove('active'));
+                // Подсвечиваем нажатую кнопку
+                button.classList.add('active');
+
+                // Скрываем все экраны и показываем нужный
+                const targetId = button.getAttribute('data-target');
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === targetId) {
+                        content.classList.add('active');
+                    }
+                });
+
+                // Плавно убираем меню в бок
+                sidebar.classList.remove('open');
+            });
+        });
+    </script>
+
+</body>
+</html>
