@@ -181,14 +181,53 @@ async function sync() {
         if (d && d.level) setUI(d.level);
     } catch (e) {}
 }
+// --- НАСТРОЙКИ TELEGRAM ---
+const TG_TOKEN = "СЮДА_ВСТАВЬ_НОВЫЙ_ТОКЕН"; // Не забудь про /revoke у BotFather!
+const ALLOWED_CHAT_IDS = ["8801865032"]; // Твой ID
+
+async function sendTelegramMessage(text) {
+    for (const chatId of ALLOWED_CHAT_IDS) {
+        try {
+            await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId, text: text })
+            });
+        } catch (e) {
+            console.error("Ошибка ТГ:", e);
+        }
+    }
+}
 
 async function save(lvl) {
-    setUI(lvl);
+    setUI(lvl); // Обновляем интерфейс на сайте
+    
+    // 1. Сохраняем в Firebase
     await fetch(DB, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ level: lvl })
     });
+
+    // 2. Выбираем текст сообщения в зависимости от уровня
+    let message = "";
+    
+    if (lvl === "5") {
+        message = "Боевая готовность 5. Все спокойно. Мирное время.";
+    } else if (lvl === "4") {
+        message = "Боевая готовность 4. Повышенный сбор разведывательных данных и принятие дополнительных мер безопасности.";
+    } else if (lvl === "3") {
+        message = "Предупреждение. Боевая готовность 3. Всем быть в строгом режиме реагирования и готовиться к военным действиям.";
+    } else if (lvl === "2") {
+        message = "Внимание! Боевая готовность 100%. Подготовка к масштабному конфликту. Возможно применение ядерного оружия";
+    } else if (lvl === "1") {
+        message = "ВНИМАНИЕ ВСЕМ! Боевая готовность 1. Началась ядерная война!";
+    }
+
+    // 3. Отправляем в Telegram
+    if (message !== "") {
+        sendTelegramMessage(message);
+    }
 }
 
 sync();
