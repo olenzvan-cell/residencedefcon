@@ -111,9 +111,10 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 <nav class="sidebar" id="sidebar">
     <button type="button" class="nav-tab active" data-target="world">Мир</button>
     <button type="button" class="nav-tab" data-target="news">Новости</button>
-    <button type="button">США</button>
-    <button type="button">Велико-<br>британия</button>
-    <button type="button">Франция</button>
+    <!-- Добавили data-target для этих кнопок, чтобы они работали -->
+    <button type="button" class="nav-tab" data-target="usa">США</button>
+    <button type="button" class="nav-tab" data-target="uk">Велико-<br>британия</button>
+    <button type="button" class="nav-tab" data-target="france">Франция</button>
     <button type="button" class="nav-tab" data-target="italy">Италия</button>
     <button type="button" class="nav-tab" data-target="russia">Россия</button>
 </nav>
@@ -130,52 +131,75 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         <p>•</p>
         <p>16.11 2026 сформировалась защитная организация "СГБ" Союз Глобальной Безопасности в качестве защиты от стран агрессоров.</p>
     </section>
+
+    <!-- НОВЫЕ СЕКЦИИ ДЛЯ СТРАН -->
+    <section id="usa" class="tab-content">
+        <h1>США</h1>
+        <p>Дата основания: октябрь 2026 года.</p>
+    </section>
+
+    <section id="uk" class="tab-content">
+        <h1>Великобритания</h1>
+        <p>Дата основания: октябрь 2026 года.</p>
+        <p style="color: #2563eb; font-weight: bold;">Входит в состав СГБ.</p>
+    </section>
+
+    <section id="france" class="tab-content">
+        <h1>Франция</h1>
+        <p>Дата основания: октябрь 2026 года.</p>
+    </section>
+    <!-- КОНЕЦ НОВЫХ СЕКЦИЙ -->
+
     <section id="italy" class="tab-content">
         <h1>Италия</h1>
         <p>Дата основания 14.11.2026</p>
     </section>
     <section id="russia" class="tab-content">
-    <h1>Россия</h1>
-    <input type="text" id="russiaCodeInput" class="stealth-input" autocomplete="off">
-    
-    <div id="russiaSecretPanel">
-        <div id="defconStatus" class="defcon-text defcon-4">DEFCON 4</div>
+        <h1>Россия</h1>
+        <!-- Текст про СГБ добавлен ВЫШЕ поля ввода пароля -->
+        <p>Дата основания: октябрь 2026 года.</p>
+        <p style="color: #2563eb; font-weight: bold; margin-bottom: 20px;">Входит в состав СГБ.</p>
         
-        <div class="dropdown-wrapper" id="defconDropdown">
-            <div class="dropdown-header" id="dropdownHeader">
-                <span>Меню</span>
-                <span class="dropdown-arrow">▼</span>
+        <input type="text" id="russiaCodeInput" class="stealth-input" autocomplete="off">
+        
+        <div id="russiaSecretPanel">
+            <div id="defconStatus" class="defcon-text defcon-4">DEFCON 4</div>
+            
+            <div class="dropdown-wrapper" id="defconDropdown">
+                <div class="dropdown-header" id="dropdownHeader">
+                    <span>Меню</span>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-list">
+                    <div class="dropdown-item defcon-5" data-level="5">DEFCON 5</div>
+                    <div class="dropdown-item defcon-4" data-level="4">DEFCON 4</div>
+                    <div class="dropdown-item defcon-3" data-level="3">DEFCON 3</div>
+                    <div class="dropdown-item defcon-2" data-level="2">DEFCON 2</div>
+                    <div class="dropdown-item defcon-1" data-level="1">DEFCON 1</div>
+                </div>
             </div>
-            <div class="dropdown-list">
-                <div class="dropdown-item defcon-5" data-level="5">DEFCON 5</div>
-                <div class="dropdown-item defcon-4" data-level="4">DEFCON 4</div>
-                <div class="dropdown-item defcon-3" data-level="3">DEFCON 3</div>
-                <div class="dropdown-item defcon-2" data-level="2">DEFCON 2</div>
-                <div class="dropdown-item defcon-1" data-level="1">DEFCON 1</div>
-            </div>
-        </div>
 
-        <div style="margin-top: 20px; padding: 15px; background: #2a0000; border: 1px solid #ef4444; border-radius: 8px;">
-            <h3 style="color: #ef4444; font-size: 16px; margin-bottom: 10px;">☢️ ЯДЕРНЫЙ АРСЕНАЛ</h3>
-            
-            <select id="targetCountry" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #1e1e1e; color: white; border: 1px solid #555; border-radius: 6px;">
-                <option value="США">США</option>
-                <option value="Великобританию">Великобританию</option>
-                <option value="Францию">Францию</option>
-                <option value="Россию">Россию</option>
-            </select>
-            
-            <button id="launchNukeBtn" style="width: 100%; padding: 12px; background: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-bottom: 10px;">
-                ЗАПУСТИТЬ РАКЕТУ
-            </button>
-            
-            <button id="cancelNukeBtn" style="width: 100%; padding: 10px; background: #52525b; color: white; border: none; border-radius: 6px; cursor: pointer; display: none;">
-                ОТМЕНИТЬ ЗАПУСК
-            </button>
-            
-            <p id="nukeStatus" style="margin-top: 10px; color: #eab308; font-size: 14px; text-align: center;"></p>
+            <div style="margin-top: 20px; padding: 15px; background: #2a0000; border: 1px solid #ef4444; border-radius: 8px;">
+                <h3 style="color: #ef4444; font-size: 16px; margin-bottom: 10px;">☢️ ЯДЕРНЫЙ АРСЕНАЛ</h3>
+                
+                <select id="targetCountry" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #1e1e1e; color: white; border: 1px solid #555; border-radius: 6px;">
+                    <option value="США">США</option>
+                    <option value="Великобританию">Великобританию</option>
+                    <option value="Францию">Францию</option>
+                    <option value="Россию">Россию</option>
+                </select>
+                
+                <button id="launchNukeBtn" style="width: 100%; padding: 12px; background: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-bottom: 10px;">
+                    ЗАПУСТИТЬ РАКЕТУ
+                </button>
+                
+                <button id="cancelNukeBtn" style="width: 100%; padding: 10px; background: #52525b; color: white; border: none; border-radius: 6px; cursor: pointer; display: none;">
+                    ОТМЕНИТЬ ЗАПУСК
+                </button>
+                
+                <p id="nukeStatus" style="margin-top: 10px; color: #eab308; font-size: 14px; text-align: center;"></p>
+            </div>
         </div>
-    </div>
     </section>
 </main>
 <div class="modal-overlay" id="confirmModal">
@@ -337,4 +361,4 @@ $('cancelNukeBtn').onclick = async () => {
 };
 </script>
 </body>
-</html>
+            </html>
