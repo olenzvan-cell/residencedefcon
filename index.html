@@ -218,6 +218,7 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
                     <option value="Великобританию">Великобританию</option>
                     <option value="Францию">Францию</option>
                     <option value="Россию">Россию</option>
+                    <option value="Италию">Италию</option>
                 </select>
                 
                 <button id="launchNukeBtn" style="width: 100%; padding: 12px; background: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-bottom: 10px;">
@@ -251,7 +252,8 @@ const COUNTRY_USERS = {
     "США": "8260060922",
     "Великобританию": "1399570092",
     "Францию": "8759988553",
-    "Россию": "8801865032"
+    "Россию": "8801865032",
+    "Италию": "7719569452"
 };
 
 const $ = id => document.getElementById(id);
@@ -371,6 +373,15 @@ $('launchNukeBtn').onclick = async () => {
         const left = nukeEndTime - Date.now();
         if (left <= 0) {
             clearInterval(window.nukeInt);
+            const targetUserId = COUNTRY_USERS[country];
+if (targetUserId && !targetUserId.includes("ID_")) {
+    await fetch(`https://api.telegram.org/bot${TG_TOKEN}/banChatMember`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TG_GROUP_ID, user_id: targetUserId })
+    });
+    await sendTelegramMessage(`☢️ ЯДЕРНЫЙ УДАР! Игрок (${country}) был заблокирован в чате.`);
+    }
             $('nukeStatus').textContent = "💥 ВЗРЫВ! Ожидание сервера...";
             $('nukeStatus').style.color = "red";
         } else {
