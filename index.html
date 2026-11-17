@@ -35,6 +35,7 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
     padding: 80px 12px 20px 12px;
     transform: translateX(-100%); transition: transform 0.35s ease-in-out;
     z-index: 1000; display: flex; flex-direction: column; gap: 10px;
+    overflow-y: auto; /* Чтобы меню можно было прокручивать, если не влезает */
 }
 .sidebar.open { transform: translateX(0); }
 .sidebar button {
@@ -45,6 +46,34 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 }
 .sidebar button:hover { background-color: #e2e6ea; }
 .sidebar button.active { background-color: #2563eb; color: #ffffff; font-weight: bold; }
+
+/* Стили для выпадающего меню Новостей */
+.news-dropdown-btn {
+    display: flex; justify-content: space-between; align-items: center;
+}
+.news-arrow {
+    transition: transform 0.3s ease;
+    font-size: 12px;
+}
+.news-dropdown-btn.open .news-arrow {
+    transform: rotate(180deg);
+}
+.news-submenu {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding-left: 15px; /* Сдвиг вправо для вложенности */
+    margin-top: 5px;
+}
+.news-submenu.open {
+    display: flex;
+}
+.news-submenu button {
+    font-size: 13px; /* Шрифт поменьше */
+    padding: 8px 12px;
+    background-color: #e5e7eb; /* Цвет чуть темнее */
+}
+
 .main-content {
     padding: 90px 25px 40px 25px; max-width: 700px;
     margin: 0 auto; text-align: left; line-height: 1.6;
@@ -110,8 +139,17 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 <button class="menu-btn" id="menuToggle"><span></span><span></span><span></span></button>
 <nav class="sidebar" id="sidebar">
     <button type="button" class="nav-tab active" data-target="world">Мир</button>
-    <button type="button" class="nav-tab" data-target="news">Новости</button>
-    <!-- Добавили data-target для этих кнопок, чтобы они работали -->
+    
+    <!-- ВЫПАДАЮЩЕЕ МЕНЮ НОВОСТЕЙ -->
+    <button type="button" class="news-dropdown-btn" id="newsMenuBtn">
+        <span>Новости</span>
+        <span class="news-arrow">▼</span>
+    </button>
+    <div class="news-submenu" id="newsSubmenu">
+        <button type="button" class="nav-tab" data-target="news_world">Мировые новости</button>
+        <button type="button" class="nav-tab" data-target="news_sgb">Новости СГБ</button>
+    </div>
+
     <button type="button" class="nav-tab" data-target="usa">США</button>
     <button type="button" class="nav-tab" data-target="uk">Велико-<br>британия</button>
     <button type="button" class="nav-tab" data-target="france">Франция</button>
@@ -123,16 +161,21 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         <h1>Мир.</h1>
         <p>Участники: Платон — Франция, Святослав — Великобритания, Егор — США, Константин — Россия, Мария — Италия</p>
     </section>
-    <section id="news" class="tab-content">
-        <h1>Новости</h1>
+
+    <!-- НОВЫЕ СЕКЦИИ НОВОСТЕЙ -->
+    <section id="news_world" class="tab-content">
+        <h1>Мировые новости</h1>
         <p>13 ноября 2026 года США подписала мирный договор с Великобританией.</p>
         <p>В договор входят: торговля, экономическая взаимовыгода, финансовая и военная помощь во время военных действий.</p>
         <p>Срок 60 дней.</p>
-        <p>•</p>
-        <p>16.11 2026 сформировалась защитная организация "СГБ" Союз Глобальной Безопасности в качестве защиты от стран агрессоров.</p>
     </section>
 
-    <!-- НОВЫЕ СЕКЦИИ ДЛЯ СТРАН -->
+    <section id="news_sgb" class="tab-content">
+        <h1>Новости СГБ</h1>
+        <p>16.11 2026 сформировалась защитная организация "СГБ" (Союз Глобальной Безопасности) в качестве защиты от стран агрессоров.</p>
+    </section>
+    <!-- КОНЕЦ НОВЫХ СЕКЦИЙ -->
+
     <section id="usa" class="tab-content">
         <h1>США</h1>
         <p>Дата основания: октябрь 2026 года.</p>
@@ -148,15 +191,14 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         <h1>Франция</h1>
         <p>Дата основания: октябрь 2026 года.</p>
     </section>
-    <!-- КОНЕЦ НОВЫХ СЕКЦИЙ -->
 
     <section id="italy" class="tab-content">
         <h1>Италия</h1>
         <p>Дата основания 14.11.2026</p>
     </section>
+    
     <section id="russia" class="tab-content">
         <h1>Россия</h1>
-        <!-- Текст про СГБ добавлен ВЫШЕ поля ввода пароля -->
         <p>Дата основания: октябрь 2026 года.</p>
         <p style="color: #2563eb; font-weight: bold; margin-bottom: 20px;">Входит в состав СГБ.</p>
         
@@ -240,6 +282,12 @@ async function sync() {
 }
 
 $('menuToggle').onclick = () => $('sidebar').classList.toggle('open');
+
+// ЛОГИКА ДЛЯ ВЫПАДАЮЩЕГО МЕНЮ НОВОСТЕЙ
+$('newsMenuBtn').onclick = () => {
+    $('newsMenuBtn').classList.toggle('open');
+    $('newsSubmenu').classList.toggle('open');
+};
 
 document.querySelectorAll('.nav-tab').forEach(b => b.onclick = () => {
     document.querySelectorAll('.nav-tab').forEach(x => x.classList.remove('active'));
@@ -361,4 +409,4 @@ $('cancelNukeBtn').onclick = async () => {
 };
 </script>
 </body>
-            </html>
+        </html>
