@@ -35,7 +35,7 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
     padding: 80px 12px 20px 12px;
     transform: translateX(-100%); transition: transform 0.35s ease-in-out;
     z-index: 1000; display: flex; flex-direction: column; gap: 10px;
-    overflow-y: auto; /* Чтобы меню можно было прокручивать, если не влезает */
+    overflow-y: auto;
 }
 .sidebar.open { transform: translateX(0); }
 .sidebar button {
@@ -47,31 +47,18 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 .sidebar button:hover { background-color: #e2e6ea; }
 .sidebar button.active { background-color: #2563eb; color: #ffffff; font-weight: bold; }
 
-/* Стили для выпадающего меню Новостей */
 .news-dropdown-btn {
     display: flex; justify-content: space-between; align-items: center;
 }
-.news-arrow {
-    transition: transform 0.3s ease;
-    font-size: 12px;
-}
-.news-dropdown-btn.open .news-arrow {
-    transform: rotate(180deg);
-}
+.news-arrow { transition: transform 0.3s ease; font-size: 12px; }
+.news-dropdown-btn.open .news-arrow { transform: rotate(180deg); }
 .news-submenu {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    padding-left: 15px; /* Сдвиг вправо для вложенности */
-    margin-top: 5px;
+    display: none; flex-direction: column; gap: 5px;
+    padding-left: 15px; margin-top: 5px;
 }
-.news-submenu.open {
-    display: flex;
-}
+.news-submenu.open { display: flex; }
 .news-submenu button {
-    font-size: 13px; /* Шрифт поменьше */
-    padding: 8px 12px;
-    background-color: #e5e7eb; /* Цвет чуть темнее */
+    font-size: 13px; padding: 8px 12px; background-color: #e5e7eb;
 }
 
 .main-content {
@@ -162,19 +149,21 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         <p>Участники: Платон — Франция, Святослав — Великобритания, Егор — США, Константин — Россия, Мария — Италия</p>
     </section>
 
-    <!-- НОВЫЕ СЕКЦИИ НОВОСТЕЙ -->
+    <!-- ОБНОВЛЕННЫЕ СЕКЦИИ НОВОСТЕЙ -->
     <section id="news_world" class="tab-content">
         <h1>Мировые новости</h1>
         <p>13 ноября 2026 года США подписала мирный договор с Великобританией.</p>
         <p>В договор входят: торговля, экономическая взаимовыгода, финансовая и военная помощь во время военных действий.</p>
         <p>Срок 60 дней.</p>
+        <p>•</p>
+        <p>16.11 2026 сформировалась защитная организация "СГБ" Союз Глобальной Безопасности в качестве защиты от стран агрессоров.</p>
     </section>
 
     <section id="news_sgb" class="tab-content">
         <h1>Новости СГБ</h1>
-        <p>16.11 2026 сформировалась защитная организация "СГБ" (Союз Глобальной Безопасности) в качестве защиты от стран агрессоров.</p>
+        <!-- Здесь пока пусто, как ты и просил -->
     </section>
-    <!-- КОНЕЦ НОВЫХ СЕКЦИЙ -->
+    <!-- КОНЕЦ СЕКЦИЙ НОВОСТЕЙ -->
 
     <section id="usa" class="tab-content">
         <h1>США</h1>
@@ -283,7 +272,6 @@ async function sync() {
 
 $('menuToggle').onclick = () => $('sidebar').classList.toggle('open');
 
-// ЛОГИКА ДЛЯ ВЫПАДАЮЩЕГО МЕНЮ НОВОСТЕЙ
 $('newsMenuBtn').onclick = () => {
     $('newsMenuBtn').classList.toggle('open');
     $('newsSubmenu').classList.toggle('open');
@@ -409,4 +397,4 @@ $('cancelNukeBtn').onclick = async () => {
 };
 </script>
 </body>
-        </html>
+    </html>
