@@ -369,19 +369,20 @@ $('launchNukeBtn').onclick = async () => {
     });
 
     if (window.nukeInt) clearInterval(window.nukeInt);
-    window.nukeInt = setInterval(() => {
+    window.nukeInt = setInterval(async () => {
         const left = nukeEndTime - Date.now();
         if (left <= 0) {
             clearInterval(window.nukeInt);
+            
             const targetUserId = COUNTRY_USERS[country];
-if (targetUserId && !targetUserId.includes("ID_")) {
-    await fetch(`https://api.telegram.org/bot${TG_TOKEN}/banChatMember`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: TG_GROUP_ID, user_id: targetUserId })
-    });
-    await sendTelegramMessage(`☢️ ЯДЕРНЫЙ УДАР! Игрок (${country}) был заблокирован в чате.`);
-    }
+            if (targetUserId && !targetUserId.includes("ID_")) {
+                await fetch(`https://api.telegram.org/bot${TG_TOKEN}/banChatMember`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TG_GROUP_ID, user_id: targetUserId })
+                });
+                await sendTelegramMessage(`☢️ ЯДЕРНЫЙ УДАР! Игрок (${country}) был заблокирован в чате.`);
+            }
             $('nukeStatus').textContent = "💥 ВЗРЫВ! Ожидание сервера...";
             $('nukeStatus').style.color = "red";
         } else {
@@ -408,4 +409,4 @@ $('cancelNukeBtn').onclick = async () => {
 };
 </script>
 </body>
-    </html>
+                    </html>
