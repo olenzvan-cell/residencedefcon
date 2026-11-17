@@ -127,7 +127,6 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 <nav class="sidebar" id="sidebar">
     <button type="button" class="nav-tab active" data-target="world">Мир</button>
     
-    <!-- ВЫПАДАЮЩЕЕ МЕНЮ НОВОСТЕЙ -->
     <button type="button" class="news-dropdown-btn" id="newsMenuBtn">
         <span>Новости</span>
         <span class="news-arrow">▼</span>
@@ -149,7 +148,6 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         <p>Участники: Платон — Франция, Святослав — Великобритания, Егор — США, Константин — Россия, Мария — Италия</p>
     </section>
 
-    <!-- ОБНОВЛЕННЫЕ СЕКЦИИ НОВОСТЕЙ -->
     <section id="news_world" class="tab-content">
         <h1>Мировые новости</h1>
         <p>13 ноября 2026 года США подписала мирный договор с Великобританией.</p>
@@ -161,9 +159,7 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 
     <section id="news_sgb" class="tab-content">
         <h1>Новости СГБ</h1>
-        <!-- Здесь пока пусто, как ты и просил -->
     </section>
-    <!-- КОНЕЦ СЕКЦИЙ НОВОСТЕЙ -->
 
     <section id="usa" class="tab-content">
         <h1>США</h1>
@@ -349,12 +345,16 @@ function formatTime(ms) {
 
 $('launchNukeBtn').onclick = async () => {
     const country = $('targetCountry').value;
+    
     const res = await fetch(`${DB_URL}/nuke_data.json?t=${Date.now()}`);
     const data = await res.json();
+    
     if (data && data.cooldownUntil && data.cooldownUntil > Date.now()) {
         alert("Бомба на перезарядке! Подожди " + formatTime(data.cooldownUntil - Date.now()));
         return;
     }
+
+    if (!confirm("Вы уверены, что хотите запустить ядерную ракету?")) return;
 
     await sendTelegramMessage(`ВНИМАНИЕ! СГБ отправила ядерную бомбу в ${country}. Страну сотрёт с лица земли через 12 часов с начала запуска.`);
     
@@ -409,4 +409,4 @@ $('cancelNukeBtn').onclick = async () => {
 };
 </script>
 </body>
-                    </html>
+                        </html>
