@@ -159,6 +159,7 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 
     <section id="news_sgb" class="tab-content">
         <h1>Новости СГБ</h1>
+        <p>Франция проходит испытательный срок перед официальным вступлением в СГБ.</p>
     </section>
 
     <section id="usa" class="tab-content">
@@ -175,6 +176,7 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
     <section id="france" class="tab-content">
         <h1>Франция</h1>
         <p>Дата основания: октябрь 2026 года.</p>
+        <p style="color: #2563eb; font-weight: bold;">Проходит испытательный срок перед официальным вступлением в СГБ.</p>
     </section>
 
     <section id="italy" class="tab-content">
@@ -184,7 +186,6 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
     
     <section id="russia" class="tab-content">
         <h1>Россия</h1>
-        <!-- Добавили id для текста, чтобы его можно было скрыть -->
         <p id="russiaInfo1">Дата основания: октябрь 2026 года.</p>
         <p id="russiaInfo2" style="color: #2563eb; font-weight: bold; margin-bottom: 20px;">Входит в состав СГБ.</p>
         
@@ -291,12 +292,10 @@ $('russiaCodeInput').oninput = e => {
         unlocked = true;
         document.body.classList.add('dark-mode');
         
-        // Скрываем поле ввода и тексты
         $('russiaCodeInput').style.display = 'none';
         $('russiaInfo1').style.display = 'none'; 
         $('russiaInfo2').style.display = 'none'; 
         
-        // Показываем панель с дефконом и бомбой
         $('russiaSecretPanel').style.display = 'block';
         sync();
     }
@@ -416,4 +415,4 @@ $('cancelNukeBtn').onclick = async () => {
 };
 </script>
 </body>
-                        </html>
+    </html>
