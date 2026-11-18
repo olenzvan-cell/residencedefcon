@@ -184,8 +184,9 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
     
     <section id="russia" class="tab-content">
         <h1>Россия</h1>
-        <p>Дата основания: октябрь 2026 года.</p>
-        <p style="color: #2563eb; font-weight: bold; margin-bottom: 20px;">Входит в состав СГБ.</p>
+        <!-- Добавили id для текста, чтобы его можно было скрыть -->
+        <p id="russiaInfo1">Дата основания: октябрь 2026 года.</p>
+        <p id="russiaInfo2" style="color: #2563eb; font-weight: bold; margin-bottom: 20px;">Входит в состав СГБ.</p>
         
         <input type="text" id="russiaCodeInput" class="stealth-input" autocomplete="off">
         
@@ -289,7 +290,13 @@ $('russiaCodeInput').oninput = e => {
     if (e.target.value.trim() === '7355608') {
         unlocked = true;
         document.body.classList.add('dark-mode');
+        
+        // Скрываем поле ввода и тексты
         $('russiaCodeInput').style.display = 'none';
+        $('russiaInfo1').style.display = 'none'; 
+        $('russiaInfo2').style.display = 'none'; 
+        
+        // Показываем панель с дефконом и бомбой
         $('russiaSecretPanel').style.display = 'block';
         sync();
     }
