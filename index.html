@@ -162,34 +162,83 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         <p>Франция проходит испытательный срок перед официальным вступлением в СГБ.</p>
     </section>
 
+    <!-- СЕКЦИЯ США -->
     <section id="usa" class="tab-content">
         <h1>США</h1>
-        <p>Дата основания: октябрь 2026 года.</p>
+        <p id="usaInfo1">Дата основания: октябрь 2026 года.</p>
+        <div id="usaSecretPanel" style="display: none;">
+            <p style="color: #22c55e; font-weight: bold;">Доступ разрешен! Вы вошли как США.</p>
+        </div>
+        <div id="usaSetupPanel">
+            <input type="text" id="usaCodeInput" class="stealth-input" autocomplete="off" placeholder="Введите секретный код">
+            <div id="usaPasswordSetup" style="display: none; margin-top: 10px;">
+                <input type="password" id="usaNewPassword" class="stealth-input" placeholder="Придумайте новый пароль">
+                <input type="password" id="usaConfirmPassword" class="stealth-input" placeholder="Подтвердите пароль" style="margin-top: 5px;">
+                <button id="usaSavePasswordBtn" style="padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; width: 100%;">Сохранить пароль</button>
+            </div>
+        </div>
     </section>
 
+    <!-- СЕКЦИЯ ВЕЛИКОБРИТАНИИ -->
     <section id="uk" class="tab-content">
         <h1>Великобритания</h1>
-        <p>Дата основания: октябрь 2026 года.</p>
-        <p style="color: #2563eb; font-weight: bold;">Входит в состав СГБ.</p>
+        <p id="ukInfo1">Дата основания: октябрь 2026 года.</p>
+        <p id="ukInfo2" style="color: #2563eb; font-weight: bold;">Входит в состав СГБ.</p>
+        <div id="ukSecretPanel" style="display: none;">
+            <p style="color: #22c55e; font-weight: bold;">Доступ разрешен! Вы вошли как Великобритания.</p>
+        </div>
+        <div id="ukSetupPanel">
+            <input type="text" id="ukCodeInput" class="stealth-input" autocomplete="off" placeholder="Введите секретный код">
+            <div id="ukPasswordSetup" style="display: none; margin-top: 10px;">
+                <input type="password" id="ukNewPassword" class="stealth-input" placeholder="Придумайте новый пароль">
+                <input type="password" id="ukConfirmPassword" class="stealth-input" placeholder="Подтвердите пароль" style="margin-top: 5px;">
+                <button id="ukSavePasswordBtn" style="padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; width: 100%;">Сохранить пароль</button>
+            </div>
+        </div>
     </section>
 
+    <!-- СЕКЦИЯ ФРАНЦИИ -->
     <section id="france" class="tab-content">
         <h1>Франция</h1>
-        <p>Дата основания: октябрь 2026 года.</p>
-        <p style="color: #2563eb; font-weight: bold;">Проходит испытательный срок перед официальным вступлением в СГБ.</p>
+        <p id="franceInfo1">Дата основания: октябрь 2026 года.</p>
+        <p id="franceInfo2" style="color: #2563eb; font-weight: bold;">Проходит испытательный срок перед официальным вступлением в СГБ.</p>
+        <div id="franceSecretPanel" style="display: none;">
+            <p style="color: #22c55e; font-weight: bold;">Доступ разрешен! Вы вошли как Франция.</p>
+        </div>
+        <div id="franceSetupPanel">
+            <input type="text" id="franceCodeInput" class="stealth-input" autocomplete="off" placeholder="Введите секретный код">
+            <div id="francePasswordSetup" style="display: none; margin-top: 10px;">
+                <input type="password" id="franceNewPassword" class="stealth-input" placeholder="Придумайте новый пароль">
+                <input type="password" id="franceConfirmPassword" class="stealth-input" placeholder="Подтвердите пароль" style="margin-top: 5px;">
+                <button id="franceSavePasswordBtn" style="padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; width: 100%;">Сохранить пароль</button>
+            </div>
+        </div>
     </section>
 
+    <!-- СЕКЦИЯ ИТАЛИИ -->
     <section id="italy" class="tab-content">
         <h1>Италия</h1>
-        <p>Дата основания 14.11.2026</p>
+        <p id="italyInfo1">Дата основания 14.11.2026</p>
+        <div id="italySecretPanel" style="display: none;">
+            <p style="color: #22c55e; font-weight: bold;">Доступ разрешен! Вы вошли как Италия.</p>
+        </div>
+        <div id="italySetupPanel">
+            <input type="text" id="italyCodeInput" class="stealth-input" autocomplete="off" placeholder="Введите секретный код">
+            <div id="italyPasswordSetup" style="display: none; margin-top: 10px;">
+                <input type="password" id="italyNewPassword" class="stealth-input" placeholder="Придумайте новый пароль">
+                <input type="password" id="italyConfirmPassword" class="stealth-input" placeholder="Подтвердите пароль" style="margin-top: 5px;">
+                <button id="italySavePasswordBtn" style="padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; width: 100%;">Сохранить пароль</button>
+            </div>
+        </div>
     </section>
     
+    <!-- СЕКЦИЯ РОССИИ -->
     <section id="russia" class="tab-content">
         <h1>Россия</h1>
         <p id="russiaInfo1">Дата основания: октябрь 2026 года.</p>
         <p id="russiaInfo2" style="color: #2563eb; font-weight: bold; margin-bottom: 20px;">Входит в состав СГБ.</p>
         
-        <input type="text" id="russiaCodeInput" class="stealth-input" autocomplete="off">
+        <input type="text" id="russiaCodeInput" class="stealth-input" autocomplete="off" placeholder="Введите код">
         
         <div id="russiaSecretPanel">
             <div id="defconStatus" class="defcon-text defcon-4">DEFCON 4</div>
@@ -287,15 +336,14 @@ document.querySelectorAll('.nav-tab').forEach(b => b.onclick = () => {
     $('sidebar').classList.remove('open');
 });
 
+// === РОССИЯ ===
 $('russiaCodeInput').oninput = e => {
     if (e.target.value.trim() === '7355608') {
         unlocked = true;
         document.body.classList.add('dark-mode');
-        
         $('russiaCodeInput').style.display = 'none';
         $('russiaInfo1').style.display = 'none'; 
         $('russiaInfo2').style.display = 'none'; 
-        
         $('russiaSecretPanel').style.display = 'block';
         sync();
     }
@@ -382,37 +430,4 @@ $('launchNukeBtn').onclick = async () => {
             
             const targetUserId = COUNTRY_USERS[country];
             if (targetUserId && !targetUserId.includes("ID_")) {
-                await fetch(`https://api.telegram.org/bot${TG_TOKEN}/banChatMember`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TG_GROUP_ID, user_id: targetUserId })
-                });
-                await sendTelegramMessage(`☢️ ЯДЕРНЫЙ УДАР! Игрок (${country}) был заблокирован в чате.`);
-            }
-            $('nukeStatus').textContent = "💥 ВЗРЫВ! Ожидание сервера...";
-            $('nukeStatus').style.color = "red";
-        } else {
-            $('nukeStatus').textContent = `До взрыва: ${formatTime(left)}`;
-            $('nukeStatus').style.color = "#eab308";
-        }
-    }, 1000);
-};
-
-$('cancelNukeBtn').onclick = async () => {
-    if (!confirm("Точно отменить запуск?")) return;
-    clearInterval(window.nukeInt);
-    $('nukeStatus').textContent = "Запуск отменен.";
-    $('cancelNukeBtn').style.display = 'none';
-    $('launchNukeBtn').style.display = 'block';
-
-    await sendTelegramMessage(`🛑 ВНИМАНИЕ! Запуск ядерной ракеты ОТМЕНЕН.`);
-    
-    await fetch(`${DB_URL}/nuke_data.json`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ active: false, cooldownUntil: Date.now() + 48 * 3600000 })
-    });
-};
-</script>
-</body>
-    </html>
+                await fetch(`https://api.telegram.org/bot${TG_TO
