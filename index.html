@@ -377,3 +377,73 @@ $('launchNukeBtn').onclick = async () => {
                     body: JSON.stringify({ chat_id: TG_GROUP_ID, user_id: targetUserId })
                 });
                 await sendTel
+                await sendTelegramMessage(`☢️ ЯДЕРНЫЙ УДАР! Игрок (${country}) был заблокирован в чате.`);
+            }
+            $('nukeStatus').textContent = "💥 ВЗРЫВ! Ожидание сервера...";
+            $('nukeStatus').style.color = "red";
+        } else {
+            $('nukeStatus').textContent = `До взрыва: ${formatTime(left)}`;
+            $('nukeStatus').style.color = "#eab308";
+        }
+    }, 1000);
+};
+
+$('cancelNukeBtn').onclick = async () => {
+    if (!confirm("Точно отменить запуск?")) return;
+    clearInterval(window.nukeInt);
+    $('nukeStatus').textContent = "Запуск отменен.";
+    $('cancelNukeBtn').style.display = 'none';
+    $('launchNukeBtn').style.display = 'block';
+    
+    await sendTelegramMessage(`🛑 ВНИМАНИЕ! Запуск ядерной ракеты ОТМЕНЕН.`);
+    
+    await fetch(`${DB_URL}/nuke_data.json`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ active: false, cooldownUntil: Date.now() + 48 * 3600000 })
+    });
+};
+
+// Пароли стран
+const COUNTRY_KEYS = { "usa": "USA2026", "uk": "UK2026", "france": "FRANCE2026", "italy": "ITALY2026" };
+
+['usa', 'uk', 'france', 'italy'].forEach(countryId => {
+    const codeInput = $(countryId + 'CodeInput');
+    const passwordSetup = $(countryId + 'PasswordSetup');
+
+    fetch(`${DB_URL}/passwords/${countryId}.json`).then(res => res.json()).then(savedPass => {
+        if (savedPass) {
+            codeInput.oninput = (e) => { if (e.target.value === savedPass) unlockCountry(countryId); };
+        } else {
+            codeInput.oninput = (e) => { if (e.target.value === COUNTRY_KEYS[countryId]) passwordSetup.style.display = 'block'; };
+        }
+    });
+
+    $(countryId + 'SavePasswordBtn').onclick = async () => {
+        const p1 = $(countryId + 'NewPassword').value;
+        const p2 = $(countryId + 'ConfirmPassword').value;
+        if (p1.length < 3) return alert("Пароль слишком короткий!");
+        if (p1 !== p2) return alert("Пароли не совпадают!");
+
+        await fetch(`${DB_URL}/passwords/${countryId}.json`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(p1)
+        });
+        alert("Пароль сохранен!");
+        unlockCountry(countryId);
+    };
+
+    function unlockCountry(id) {
+        $(id + 'SetupPanel').style.display = 'none';
+        $(id + 'SecretPanel').style.display = 'block';
+        const i1 = $(id + 'Info1');
+        const i2 = $(id + 'Info2');
+        if (i1) i1.style.display = 'none';
+        if (i2) i2.style.display = 'none';
+        document.body.classList.add('dark-mode');
+    }
+});
+</script>
+</body>
+</html>
