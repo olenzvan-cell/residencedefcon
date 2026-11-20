@@ -14,36 +14,14 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 body.dark-mode { background-color: #121212; color: #f4f4f9; }
-body.dark-mode .main-content h1,
-body.dark-mode .main-content p { color: #f4f4f9; }
+body.dark-mode .main-content h1, body.dark-mode .main-content p { color: #f4f4f9; }
 body.dark-mode .menu-btn span { background-color: #f4f4f9; }
-.menu-btn {
-    position: fixed; top: 20px; left: 20px; z-index: 1001;
-    background: none; border: none; cursor: pointer;
-    display: flex; flex-direction: column; justify-content: space-between;
-    width: 30px; height: 22px;
-}
-.menu-btn span {
-    display: block; height: 3px; width: 100%;
-    background-color: #333; border-radius: 3px;
-    transition: background-color 0.3s ease;
-}
-.sidebar {
-    position: fixed; top: 0; left: 0; height: 100%;
-    width: 280px; max-width: 45vw; background-color: #ffffff;
-    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
-    padding: 80px 12px 20px 12px;
-    transform: translateX(-100%); transition: transform 0.35s ease-in-out;
-    z-index: 1000; display: flex; flex-direction: column; gap: 10px;
-    overflow-y: auto;
-}
+
+.menu-btn { position: fixed; top: 20px; left: 20px; z-index: 1001; background: none; border: none; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; width: 30px; height: 22px; }
+.menu-btn span { display: block; height: 3px; width: 100%; background-color: #333; border-radius: 3px; transition: background-color 0.3s ease; }
+.sidebar { position: fixed; top: 0; left: 0; height: 100%; width: 280px; max-width: 45vw; background-color: #ffffff; box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15); padding: 80px 12px 20px 12px; transform: translateX(-100%); transition: transform 0.35s ease-in-out; z-index: 1000; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
 .sidebar.open { transform: translateX(0); }
-.sidebar button {
-    background-color: #f0f2f5; border: none; border-radius: 8px;
-    padding: 12px; text-align: left; font-size: 15px; line-height: 1.3;
-    color: #222; cursor: pointer; width: 100%;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
+.sidebar button { background-color: #f0f2f5; border: none; border-radius: 8px; padding: 12px; text-align: left; font-size: 15px; line-height: 1.3; color: #222; cursor: pointer; width: 100%; transition: background-color 0.2s ease, color 0.2s ease; }
 .sidebar button:hover { background-color: #e2e6ea; }
 .sidebar button.active { background-color: #2563eb; color: #ffffff; font-weight: bold; }
 
@@ -69,6 +47,7 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 .dropdown-wrapper.open .dropdown-list { display: flex; }
 .dropdown-item { padding: 12px 16px; cursor: pointer; font-weight: bold; border-bottom: 1px solid #2e2e2e; }
 .dropdown-item:last-child { border-bottom: none; }
+
 .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
 .modal-box { background-color: #1e1e1e; border: 1px solid #444; color: #fff; padding: 24px; border-radius: 12px; max-width: 320px; width: 100%; text-align: center; }
 .modal-box p { color: #fff; font-size: 17px; margin-bottom: 20px; }
@@ -78,9 +57,25 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 .btn-cancel { background-color: #3f3f46; color: #fff; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
+
+/* --- СТИЛИ ДЛЯ ВИДЕО --- */
+#video-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #000; z-index: 9999; display: none;
+    justify-content: center; align-items: center;
+    opacity: 0; transition: opacity 0.5s ease;
+}
+#video-overlay.show { display: flex; opacity: 1; }
+#intro-video { width: 100%; height: 100%; object-fit: cover; }
 </style>
 </head>
 <body>
+
+<!-- ОКНО ДЛЯ ВИДЕО (у него нет фиксированного источника, он подставляется из JS) -->
+<div id="video-overlay">
+    <video id="intro-video" autoplay muted playsinline></video>
+</div>
+
 <button class="menu-btn" id="menuToggle"><span></span><span></span><span></span></button>
 <nav class="sidebar" id="sidebar">
     <button type="button" class="nav-tab active" data-target="world">Мир</button>
@@ -241,8 +236,9 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         </div>
     </div>
 </div>
+
 <script>
-const DB_URL = "https://world-game-e4a38-default-rtdb.europe-west1.firebasedatabase.app";
+    const DB_URL = "https://world-game-e4a38-default-rtdb.europe-west1.firebasedatabase.app";
 const TG_TOKEN = "9075464351:AAG2083sNOo3Y8mu-7TmRCF3vJ__hqRyTGA";
 const TG_GROUP_ID = "-1003977032550";
 
@@ -254,9 +250,36 @@ const COUNTRY_USERS = {
     "Италию": "7719569452"
 };
 
+// Ссылки на видео для каждой страны
+const COUNTRY_VIDEOS = {
+    "usa": "usa_intro.mp4",
+    "uk": "uk_intro.mp4",
+    "france": "france_intro.mp4",
+    "italy": "italy_intro.mp4"
+};
+
 const $ = id => document.getElementById(id);
 let unlocked = false, pending = null;
 
+// --- ВИДЕО-ПЛЕЕР ---
+const videoOverlay = $('video-overlay');
+const introVideo = $('intro-video');
+
+function playVideo(videoSrc, callback) {
+    introVideo.src = videoSrc;
+    videoOverlay.classList.add('show');
+    introVideo.currentTime = 0;
+    introVideo.play();
+    
+    introVideo.onended = () => {
+        videoOverlay.classList.remove('show');
+        setTimeout(() => {
+            if (callback) callback();
+        }, 500); // Ждем завершения анимации (0.5 сек)
+    };
+}
+
+// --- БАЗОВЫЕ ФУНКЦИИ ---
 function setUI(lvl) {
     $('defconStatus').textContent = 'DEFCON ' + lvl;
     $('defconStatus').className = 'defcon-text defcon-' + lvl;
@@ -270,7 +293,6 @@ async function sync() {
     } catch (e) {}
 }
 
-// Базовые обработчики
 $('menuToggle').onclick = () => $('sidebar').classList.toggle('open');
 
 $('newsMenuBtn').onclick = () => {
@@ -288,7 +310,7 @@ document.querySelectorAll('.nav-tab').forEach(b => b.onclick = () => {
     $('sidebar').classList.remove('open');
 });
 
-// Россия
+// --- РОССИЯ ---
 $('russiaCodeInput').oninput = e => {
     if (e.target.value.trim() === '7355608') {
         unlocked = true;
@@ -301,7 +323,7 @@ $('russiaCodeInput').oninput = e => {
     }
 };
 
-// DEFCON
+// --- DEFCON ---
 $('dropdownHeader').onclick = () => $('defconDropdown').classList.toggle('open');
 document.querySelectorAll('.dropdown-item').forEach(i => i.onclick = () => {
     pending = i.dataset.level;
@@ -342,7 +364,7 @@ function formatTime(ms) {
     return `${Math.floor(s / 3600).toString().padStart(2,'0')}:${Math.floor((s % 3600)/60).toString().padStart(2,'0')}:${(s % 60).toString().padStart(2,'0')}`;
 }
 
-// Бомба
+// --- БОМБА ---
 $('launchNukeBtn').onclick = async () => {
     const country = $('targetCountry').value;
     const res = await fetch(`${DB_URL}/nuke_data.json?t=${Date.now()}`);
@@ -376,7 +398,6 @@ $('launchNukeBtn').onclick = async () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ chat_id: TG_GROUP_ID, user_id: targetUserId })
                 });
-                await sendTel
                 await sendTelegramMessage(`☢️ ЯДЕРНЫЙ УДАР! Игрок (${country}) был заблокирован в чате.`);
             }
             $('nukeStatus').textContent = "💥 ВЗРЫВ! Ожидание сервера...";
@@ -394,9 +415,7 @@ $('cancelNukeBtn').onclick = async () => {
     $('nukeStatus').textContent = "Запуск отменен.";
     $('cancelNukeBtn').style.display = 'none';
     $('launchNukeBtn').style.display = 'block';
-    
     await sendTelegramMessage(`🛑 ВНИМАНИЕ! Запуск ядерной ракеты ОТМЕНЕН.`);
-    
     await fetch(`${DB_URL}/nuke_data.json`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -404,21 +423,40 @@ $('cancelNukeBtn').onclick = async () => {
     });
 };
 
-// Пароли стран
+// --- ПАРОЛИ И ВИДЕО ДЛЯ СТРАН ---
 const COUNTRY_KEYS = { "usa": "USA2026", "uk": "UK2026", "france": "FRANCE2026", "italy": "ITALY2026" };
 
 ['usa', 'uk', 'france', 'italy'].forEach(countryId => {
     const codeInput = $(countryId + 'CodeInput');
     const passwordSetup = $(countryId + 'PasswordSetup');
-
+    
+    // Проверяем, есть ли сохраненный пароль в базе
     fetch(`${DB_URL}/passwords/${countryId}.json`).then(res => res.json()).then(savedPass => {
         if (savedPass) {
-            codeInput.oninput = (e) => { if (e.target.value === savedPass) unlockCountry(countryId); };
+            // Если есть свой пароль
+            codeInput.oninput = (e) => { 
+                if (e.target.value === savedPass) {
+                    // ВХОД БЕЗ ВИДЕО (свой пароль)
+                    document.body.classList.add('dark-mode');
+                    unlockCountry(countryId);
+                }
+            };
         } else {
-            codeInput.oninput = (e) => { if (e.target.value === COUNTRY_KEYS[countryId]) passwordSetup.style.display = 'block'; };
+            // Если нет пароля - ждем заводской код
+            codeInput.oninput = (e) => { 
+                if (e.target.value === COUNTRY_KEYS[countryId]) {
+                    // ВХОД С ВИДЕО (заводской пароль)
+                    const videoSrc = COUNTRY_VIDEOS[countryId];
+                    playVideo(videoSrc, () => {
+                        document.body.classList.add('dark-mode');
+                        passwordSetup.style.display = 'block'; 
+                    });
+                }
+            };
         }
     });
 
+    // Сохранение нового пароля
     $(countryId + 'SavePasswordBtn').onclick = async () => {
         const p1 = $(countryId + 'NewPassword').value;
         const p2 = $(countryId + 'ConfirmPassword').value;
@@ -430,7 +468,7 @@ const COUNTRY_KEYS = { "usa": "USA2026", "uk": "UK2026", "france": "FRANCE2026",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(p1)
         });
-        alert("Пароль сохранен!");
+        alert("Пароль сохранен! Теперь входите по нему.");
         unlockCountry(countryId);
     };
 
