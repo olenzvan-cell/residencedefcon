@@ -162,7 +162,6 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         <p>Франция проходит испытательный срок перед официальным вступлением в СГБ.</p>
     </section>
 
-    <!-- СЕКЦИЯ США -->
     <section id="usa" class="tab-content">
         <h1>США</h1>
         <p id="usaInfo1">Дата основания: октябрь 2026 года.</p>
@@ -179,7 +178,6 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         </div>
     </section>
 
-    <!-- СЕКЦИЯ ВЕЛИКОБРИТАНИИ -->
     <section id="uk" class="tab-content">
         <h1>Великобритания</h1>
         <p id="ukInfo1">Дата основания: октябрь 2026 года.</p>
@@ -197,7 +195,6 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         </div>
     </section>
 
-    <!-- СЕКЦИЯ ФРАНЦИИ -->
     <section id="france" class="tab-content">
         <h1>Франция</h1>
         <p id="franceInfo1">Дата основания: октябрь 2026 года.</p>
@@ -215,7 +212,6 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         </div>
     </section>
 
-    <!-- СЕКЦИЯ ИТАЛИИ -->
     <section id="italy" class="tab-content">
         <h1>Италия</h1>
         <p id="italyInfo1">Дата основания 14.11.2026</p>
@@ -232,7 +228,6 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         </div>
     </section>
     
-    <!-- СЕКЦИЯ РОССИИ -->
     <section id="russia" class="tab-content">
         <h1>Россия</h1>
         <p id="russiaInfo1">Дата основания: октябрь 2026 года.</p>
@@ -336,7 +331,6 @@ document.querySelectorAll('.nav-tab').forEach(b => b.onclick = () => {
     $('sidebar').classList.remove('open');
 });
 
-// === РОССИЯ ===
 $('russiaCodeInput').oninput = e => {
     if (e.target.value.trim() === '7355608') {
         unlocked = true;
@@ -430,4 +424,7 @@ $('launchNukeBtn').onclick = async () => {
             
             const targetUserId = COUNTRY_USERS[country];
             if (targetUserId && !targetUserId.includes("ID_")) {
-                await fetch(`https://api.telegram.org/bot${TG_TO
+                await fetch(`https://api.telegram.org/bot${TG_TOKEN}/banChatMember`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.
