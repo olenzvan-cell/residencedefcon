@@ -6,17 +6,10 @@
 <title>Сайт с боковым меню</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
-    min-height: 100vh;
-    transition: background-color 0.4s ease, color 0.4s ease;
-}
+body { font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; min-height: 100vh; transition: background-color 0.4s ease, color 0.4s ease; }
 body.dark-mode { background-color: #121212; color: #f4f4f9; }
 body.dark-mode .main-content h1, body.dark-mode .main-content p { color: #f4f4f9; }
 body.dark-mode .menu-btn span { background-color: #f4f4f9; }
-
 .menu-btn { position: fixed; top: 20px; left: 20px; z-index: 1001; background: none; border: none; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; width: 30px; height: 22px; }
 .menu-btn span { display: block; height: 3px; width: 100%; background-color: #333; border-radius: 3px; transition: background-color 0.3s ease; }
 .sidebar { position: fixed; top: 0; left: 0; height: 100%; width: 280px; max-width: 45vw; background-color: #ffffff; box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15); padding: 80px 12px 20px 12px; transform: translateX(-100%); transition: transform 0.35s ease-in-out; z-index: 1000; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
@@ -36,7 +29,6 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 .main-content h1 { font-size: 28px; margin-bottom: 12px; color: #111; }
 .main-content p { font-size: 18px; color: #333; margin-bottom: 15px; }
 .stealth-input { width: 100%; max-width: 260px; padding: 10px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff; color: #333; outline: none; margin-top: 5px; }
-#russiaSecretPanel { display: none; margin-top: 10px; }
 .defcon-text { font-size: 24px; font-weight: bold; letter-spacing: 2px; margin-bottom: 15px; transition: color 0.3s ease; }
 .defcon-5 { color: #38bdf8; } .defcon-4 { color: #22c55e; } .defcon-3 { color: #eab308; } .defcon-2 { color: #ef4444; } .defcon-1 { color: #ffffff; }
 .dropdown-wrapper { position: relative; width: 220px; }
@@ -58,31 +50,27 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* --- СТИЛИ ДЛЯ ВИДЕО --- */
-#video-overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: #000; z-index: 9999; display: none;
-    justify-content: center; align-items: center;
-    opacity: 0; transition: opacity 0.5s ease;
-}
+#video-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; }
 #video-overlay.show { display: flex; opacity: 1; }
 #intro-video { width: 100%; height: 100%; object-fit: cover; }
+
+/* Стили для панелей действий */
+.action-panel { margin-top: 20px; padding: 15px; border-radius: 8px; border: 1px solid #444; background: #1e1e1e; color: white; }
+.action-btn { width: 100%; padding: 10px; margin-top: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; background: #3f3f46; color: white; }
+.action-btn:hover { background: #52525b; }
+.action-btn.red { background: #ef4444; }
+.action-btn.blue { background: #2563eb; }
+.select-country { width: 100%; padding: 10px; margin-top: 10px; background: #1e1e1e; color: white; border: 1px solid #555; border-radius: 6px; }
 </style>
 </head>
 <body>
 
-<!-- ОКНО ДЛЯ ВИДЕО (у него нет фиксированного источника, он подставляется из JS) -->
-<div id="video-overlay">
-    <video id="intro-video" autoplay muted playsinline></video>
-</div>
+<div id="video-overlay"><video id="intro-video" autoplay muted playsinline></video></div>
 
 <button class="menu-btn" id="menuToggle"><span></span><span></span><span></span></button>
 <nav class="sidebar" id="sidebar">
     <button type="button" class="nav-tab active" data-target="world">Мир</button>
-    <button type="button" class="news-dropdown-btn" id="newsMenuBtn">
-        <span>Новости</span>
-        <span class="news-arrow">▼</span>
-    </button>
+    <button type="button" class="news-dropdown-btn" id="newsMenuBtn"><span>Новости</span><span class="news-arrow">▼</span></button>
     <div class="news-submenu" id="newsSubmenu">
         <button type="button" class="nav-tab" data-target="news_world">Мировые новости</button>
         <button type="button" class="nav-tab" data-target="news_sgb">Новости СГБ</button>
@@ -93,6 +81,7 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
     <button type="button" class="nav-tab" data-target="italy">Италия</button>
     <button type="button" class="nav-tab" data-target="russia">Россия</button>
 </nav>
+
 <main class="main-content">
     <section id="world" class="tab-content active">
         <h1>Мир.</h1>
@@ -102,12 +91,7 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
     <section id="news_world" class="tab-content">
         <h1>Мировые новости</h1>
         <p>13 ноября 2026 года США подписала мирный договор с Великобританией.</p>
-        <p>В договор входят: торговля, экономическая взаимовыгода, финансовая и военная помощь во время военных действий.</p>
-        <p>Срок 60 дней.</p>
-        <p>•</p>
-        <p>16.11 2026 сформировалась защитная организация "СГБ" Союз Глобальной Безопасности в качестве защиты от стран агрессоров.</p>
-        <p>•</p>
-        <p>20.11.2026 в 12:10-12:50 проходила конференция. На конференции присутствовали: Франция, Великобритания, Сша и Россия. Были решины  важные вопросы по поводу экономики и ВВП стран.</p>
+        <p>20.11.2026 в 12:10-12:50 проходила конференция. На конференции присутствовали: Франция, Великобритания, США и Россия. Были решены важные вопросы по поводу экономики и ВВП стран.</p>
     </section>
 
     <section id="news_sgb" class="tab-content">
@@ -115,87 +99,122 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
         <p>Франция проходит испытательный срок перед официальным вступлением в СГБ.</p>
     </section>
 
+    <!-- США -->
     <section id="usa" class="tab-content">
         <h1>США</h1>
         <p id="usaInfo1">Дата основания: октябрь 2026 года.</p>
+        <div id="usaSpyButton" style="display:none; margin-bottom: 10px;"><button class="action-btn blue" onclick="enterSpyMode('usa')">Войти как шпион (США)</button></div>
         <div id="usaSecretPanel" style="display: none;">
             <p style="color: #22c55e; font-weight: bold;">Доступ разрешен! Вы вошли как США.</p>
+            <div class="action-panel">
+                <h3>Действия США</h3>
+                <select class="select-country" id="usaTradeTarget"><option value="Россию">Россия</option><option value="Великобританию">Великобритания</option><option value="Францию">Франция</option><option value="Италию">Италия</option></select>
+                <button class="action-btn" onclick="toggleTrade('США', 'usaTradeTarget')">Заблокировать/Разблокировать торговлю</button>
+                <button class="action-btn red" onclick="applySanctions('США', 'usaTradeTarget')">Ввести санкции</button>
+                <select class="select-country" id="usaSpyTarget"><option value="Россию">Россия</option><option value="Великобританию">Великобритания</option><option value="Францию">Франция</option><option value="Италию">Италия</option></select>
+                <button class="action-btn blue" onclick="startSpy('США', 'usaSpyTarget')">Активировать шпионаж (1 мин)</button>
+            </div>
         </div>
         <div id="usaSetupPanel">
             <input type="text" id="usaCodeInput" class="stealth-input" autocomplete="off" placeholder="Введите секретный код">
             <div id="usaPasswordSetup" style="display: none; margin-top: 10px;">
                 <input type="password" id="usaNewPassword" class="stealth-input" placeholder="Придумайте новый пароль">
                 <input type="password" id="usaConfirmPassword" class="stealth-input" placeholder="Подтвердите пароль" style="margin-top: 5px;">
-                <button id="usaSavePasswordBtn" style="padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; width: 100%;">Сохранить пароль</button>
+                <button id="usaSavePasswordBtn" class="action-btn blue">Сохранить пароль</button>
             </div>
         </div>
     </section>
 
+    <!-- Великобритания -->
     <section id="uk" class="tab-content">
         <h1>Великобритания</h1>
         <p id="ukInfo1">Дата основания: октябрь 2026 года.</p>
         <p id="ukInfo2" style="color: #2563eb; font-weight: bold;">Входит в состав СГБ.</p>
+        <div id="ukSpyButton" style="display:none; margin-bottom: 10px;"><button class="action-btn blue" onclick="enterSpyMode('uk')">Войти как шпион (Великобритания)</button></div>
         <div id="ukSecretPanel" style="display: none;">
             <p style="color: #22c55e; font-weight: bold;">Доступ разрешен! Вы вошли как Великобритания.</p>
+            <div class="action-panel">
+                <h3>Действия Великобритании</h3>
+                <select class="select-country" id="ukTradeTarget"><option value="Россию">Россия</option><option value="США">США</option><option value="Францию">Франция</option><option value="Италию">Италия</option></select>
+                <button class="action-btn" onclick="toggleTrade('Великобритания', 'ukTradeTarget')">Заблокировать/Разблокировать торговлю</button>
+                <button class="action-btn red" onclick="applySanctions('Великобритания', 'ukTradeTarget')">Ввести санкции</button>
+                <select class="select-country" id="ukSpyTarget"><option value="Россию">Россия</option><option value="США">США</option><option value="Францию">Франция</option><option value="Италию">Италия</option></select>
+                <button class="action-btn blue" onclick="startSpy('Великобритания', 'ukSpyTarget')">Активировать шпионаж (1 мин)</button>
+            </div>
         </div>
         <div id="ukSetupPanel">
             <input type="text" id="ukCodeInput" class="stealth-input" autocomplete="off" placeholder="Введите секретный код">
             <div id="ukPasswordSetup" style="display: none; margin-top: 10px;">
                 <input type="password" id="ukNewPassword" class="stealth-input" placeholder="Придумайте новый пароль">
                 <input type="password" id="ukConfirmPassword" class="stealth-input" placeholder="Подтвердите пароль" style="margin-top: 5px;">
-                <button id="ukSavePasswordBtn" style="padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; width: 100%;">Сохранить пароль</button>
+                <button id="ukSavePasswordBtn" class="action-btn blue">Сохранить пароль</button>
             </div>
         </div>
     </section>
 
+    <!-- Франция -->
     <section id="france" class="tab-content">
         <h1>Франция</h1>
         <p id="franceInfo1">Дата основания: октябрь 2026 года.</p>
         <p id="franceInfo2" style="color: #2563eb; font-weight: bold;">Проходит испытательный срок перед официальным вступлением в СГБ.</p>
+        <div id="franceSpyButton" style="display:none; margin-bottom: 10px;"><button class="action-btn blue" onclick="enterSpyMode('france')">Войти как шпион (Франция)</button></div>
         <div id="franceSecretPanel" style="display: none;">
             <p style="color: #22c55e; font-weight: bold;">Доступ разрешен! Вы вошли как Франция.</p>
+            <div class="action-panel">
+                <h3>Действия Франции</h3>
+                <select class="select-country" id="franceTradeTarget"><option value="Россию">Россия</option><option value="США">США</option><option value="Великобританию">Великобритания</option><option value="Италию">Италия</option></select>
+                <button class="action-btn" onclick="toggleTrade('Франция', 'franceTradeTarget')">Заблокировать/Разблокировать торговлю</button>
+                <button class="action-btn red" onclick="applySanctions('Франция', 'franceTradeTarget')">Ввести санкции</button>
+                <select class="select-country" id="franceSpyTarget"><option value="Россию">Россия</option><option value="США">США</option><option value="Великобританию">Великобритания</option><option value="Италию">Италия</option></select>
+                <button class="action-btn blue" onclick="startSpy('Франция', 'franceSpyTarget')">Активировать шпионаж (1 мин)</button>
+            </div>
         </div>
         <div id="franceSetupPanel">
             <input type="text" id="franceCodeInput" class="stealth-input" autocomplete="off" placeholder="Введите секретный код">
             <div id="francePasswordSetup" style="display: none; margin-top: 10px;">
                 <input type="password" id="franceNewPassword" class="stealth-input" placeholder="Придумайте новый пароль">
                 <input type="password" id="franceConfirmPassword" class="stealth-input" placeholder="Подтвердите пароль" style="margin-top: 5px;">
-                <button id="franceSavePasswordBtn" style="padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; width: 100%;">Сохранить пароль</button>
+                <button id="franceSavePasswordBtn" class="action-btn blue">Сохранить пароль</button>
             </div>
         </div>
     </section>
 
+    <!-- Италия -->
     <section id="italy" class="tab-content">
         <h1>Италия</h1>
         <p id="italyInfo1">Дата основания 14.11.2026</p>
+        <div id="italySpyButton" style="display:none; margin-bottom: 10px;"><button class="action-btn blue" onclick="enterSpyMode('italy')">Войти как шпион (Италия)</button></div>
         <div id="italySecretPanel" style="display: none;">
             <p style="color: #22c55e; font-weight: bold;">Доступ разрешен! Вы вошли как Италия.</p>
+            <div class="action-panel">
+                <h3>Действия Италии</h3>
+                <select class="select-country" id="italyTradeTarget"><option value="Россию">Россия</option><option value="США">США</option><option value="Великобританию">Великобритания</option><option value="Францию">Франция</option></select>
+                <button class="action-btn" onclick="toggleTrade('Италия', 'italyTradeTarget')">Заблокировать/Разблокировать торговлю</button>
+                <button class="action-btn red" onclick="applySanctions('Италия', 'italyTradeTarget')">Ввести санкции</button>
+                <select class="select-country" id="italySpyTarget"><option value="Россию">Россия</option><option value="США">США</option><option value="Великобританию">Великобритания</option><option value="Францию">Франция</option></select>
+                <button class="action-btn blue" onclick="startSpy('Италия', 'italySpyTarget')">Активировать шпионаж (1 мин)</button>
+            </div>
         </div>
         <div id="italySetupPanel">
             <input type="text" id="italyCodeInput" class="stealth-input" autocomplete="off" placeholder="Введите секретный код">
             <div id="italyPasswordSetup" style="display: none; margin-top: 10px;">
                 <input type="password" id="italyNewPassword" class="stealth-input" placeholder="Придумайте новый пароль">
                 <input type="password" id="italyConfirmPassword" class="stealth-input" placeholder="Подтвердите пароль" style="margin-top: 5px;">
-                <button id="italySavePasswordBtn" style="padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; width: 100%;">Сохранить пароль</button>
+                <button id="italySavePasswordBtn" class="action-btn blue">Сохранить пароль</button>
             </div>
         </div>
     </section>
     
+    <!-- Россия -->
     <section id="russia" class="tab-content">
         <h1>Россия</h1>
         <p id="russiaInfo1">Дата основания: октябрь 2026 года.</p>
         <p id="russiaInfo2" style="color: #2563eb; font-weight: bold; margin-bottom: 20px;">Входит в состав СГБ.</p>
-        
         <input type="text" id="russiaCodeInput" class="stealth-input" autocomplete="off" placeholder="Введите код">
-        
         <div id="russiaSecretPanel">
             <div id="defconStatus" class="defcon-text defcon-4">DEFCON 4</div>
-            
             <div class="dropdown-wrapper" id="defconDropdown">
-                <div class="dropdown-header" id="dropdownHeader">
-                    <span>Меню</span>
-                    <span class="dropdown-arrow">▼</span>
-                </div>
+                <div class="dropdown-header" id="dropdownHeader"><span>Меню</span><span class="dropdown-arrow">▼</span></div>
                 <div class="dropdown-list">
                     <div class="dropdown-item defcon-5" data-level="5">DEFCON 5</div>
                     <div class="dropdown-item defcon-4" data-level="4">DEFCON 4</div>
@@ -204,27 +223,22 @@ body.dark-mode .menu-btn span { background-color: #f4f4f9; }
                     <div class="dropdown-item defcon-1" data-level="1">DEFCON 1</div>
                 </div>
             </div>
-
-            <div style="margin-top: 20px; padding: 15px; background: #2a0000; border: 1px solid #ef4444; border-radius: 8px;">
-                <h3 style="color: #ef4444; font-size: 16px; margin-bottom: 10px;">☢️ ЯДЕРНЫЙ АРСЕНАЛ</h3>
-                
-                <select id="targetCountry" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #1e1e1e; color: white; border: 1px solid #555; border-radius: 6px;">
-                    <option value="США">США</option>
-                    <option value="Великобританию">Великобританию</option>
-                    <option value="Францию">Францию</option>
-                    <option value="Россию">Россию</option>
-                    <option value="Италию">Италию</option>
+            <div class="action-panel">
+                <h3>☢️ ЯДЕРНЫЙ АРСЕНАЛ</h3>
+                <select id="targetCountry" class="select-country">
+                    <option value="США">США</option><option value="Великобританию">Великобританию</option><option value="Францию">Францию</option><option value="Россию">Россию</option><option value="Италию">Италию</option>
                 </select>
-                
-                <button id="launchNukeBtn" style="width: 100%; padding: 12px; background: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-bottom: 10px;">
-                    ЗАПУСТИТЬ РАКЕТУ
-                </button>
-                
-                <button id="cancelNukeBtn" style="width: 100%; padding: 10px; background: #52525b; color: white; border: none; border-radius: 6px; cursor: pointer; display: none;">
-                    ОТМЕНИТЬ ЗАПУСК
-                </button>
-                
+                <button id="launchNukeBtn" class="action-btn red">ЗАПУСТИТЬ РАКЕТУ</button>
+                <button id="cancelNukeBtn" class="action-btn" style="display: none;">ОТМЕНИТЬ ЗАПУСК</button>
                 <p id="nukeStatus" style="margin-top: 10px; color: #eab308; font-size: 14px; text-align: center;"></p>
+            </div>
+            <div class="action-panel">
+                <h3>Действия России</h3>
+                <select class="select-country" id="russiaTradeTarget"><option value="США">США</option><option value="Великобританию">Великобритания</option><option value="Францию">Франция</option><option value="Италию">Италия</option></select>
+                <button class="action-btn" onclick="toggleTrade('Россия', 'russiaTradeTarget')">Заблокировать/Разблокировать торговлю</button>
+                <button class="action-btn red" onclick="applySanctions('Россия', 'russiaTradeTarget')">Ввести санкции</button>
+                <select class="select-country" id="russiaSpyTarget"><option value="США">США</option><option value="Великобританию">Великобритания</option><option value="Францию">Франция</option><option value="Италию">Италия</option></select>
+                <button class="action-btn blue" onclick="startSpy('Россия', 'russiaSpyTarget')">Активировать шпионаж (1 мин)</button>
             </div>
         </div>
     </section>
@@ -245,23 +259,14 @@ const TG_TOKEN = "9075464351:AAG2083sNOo3Y8mu-7TmRCF3vJ__hqRyTGA";
 const TG_GROUP_ID = "-1003977032550";
 
 const COUNTRY_USERS = {
-    "США": "8260060922",
-    "Великобританию": "1399570092",
-    "Францию": "8759988553",
-    "Россию": "8801865032",
-    "Италию": "7719569452"
+    "США": "8260060922", "Великобританию": "1399570092", "Францию": "8759988553", "Россию": "8801865032", "Италию": "7719569452"
 };
 
-// Ссылки на видео для каждой страны
-const COUNTRY_VIDEOS = {
-    "usa": "usa_intro.webm",
-    "uk": "uk_intro.webm",
-    "france": "france_intro.webm",
-    "italy": "italy_intro.webm"
-};
+const COUNTRY_VIDEOS = { "usa": "usa_intro.webm", "uk": "uk_intro.webm", "france": "france_intro.webm", "italy": "italy_intro.webm" };
 
 const $ = id => document.getElementById(id);
 let unlocked = false, pending = null;
+let currentSpyCountry = null;
 
 // --- ВИДЕО-ПЛЕЕР ---
 const videoOverlay = $('video-overlay');
@@ -272,20 +277,14 @@ function playVideo(videoSrc, callback) {
     videoOverlay.classList.add('show');
     introVideo.currentTime = 0;
     introVideo.play();
-    
     introVideo.onended = () => {
         videoOverlay.classList.remove('show');
-        setTimeout(() => {
-            if (callback) callback();
-        }, 500); // Ждем завершения анимации (0.5 сек)
+        setTimeout(() => { if (callback) callback(); }, 500);
     };
 }
 
 // --- БАЗОВЫЕ ФУНКЦИИ ---
-function setUI(lvl) {
-    $('defconStatus').textContent = 'DEFCON ' + lvl;
-    $('defconStatus').className = 'defcon-text defcon-' + lvl;
-}
+function setUI(lvl) { $('defconStatus').textContent = 'DEFCON ' + lvl; $('defconStatus').className = 'defcon-text defcon-' + lvl; }
 
 async function sync() {
     try {
@@ -296,11 +295,7 @@ async function sync() {
 }
 
 $('menuToggle').onclick = () => $('sidebar').classList.toggle('open');
-
-$('newsMenuBtn').onclick = () => {
-    $('newsMenuBtn').classList.toggle('open');
-    $('newsSubmenu').classList.toggle('open');
-};
+$('newsMenuBtn').onclick = () => { $('newsMenuBtn').classList.toggle('open'); $('newsSubmenu').classList.toggle('open'); };
 
 document.querySelectorAll('.nav-tab').forEach(b => b.onclick = () => {
     document.querySelectorAll('.nav-tab').forEach(x => x.classList.remove('active'));
@@ -338,19 +333,14 @@ $('confirmNo').onclick = () => $('confirmModal').style.display = 'none';
 
 async function sendTelegramMessage(text) {
     await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chat_id: TG_GROUP_ID, text: text })
     });
 }
 
 async function saveDefcon(lvl) {
     setUI(lvl);
-    await fetch(`${DB_URL}/russia_defcon.json`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ level: lvl })
-    });
+    await fetch(`${DB_URL}/russia_defcon.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ level: lvl }) });
     let msg = "";
     if (lvl === "5") msg = "Боевая готовность 5. Все спокойно. Мирное время.";
     else if (lvl === "4") msg = "Боевая готовность 4. Повышенный сбор разведывательных данных и принятие дополнительных мер безопасности.";
@@ -371,22 +361,14 @@ $('launchNukeBtn').onclick = async () => {
     const country = $('targetCountry').value;
     const res = await fetch(`${DB_URL}/nuke_data.json?t=${Date.now()}`);
     const data = await res.json();
-    if (data && data.cooldownUntil && data.cooldownUntil > Date.now()) {
-        alert("Бомба на перезарядке! Подожди " + formatTime(data.cooldownUntil - Date.now()));
-        return;
-    }
+    if (data && data.cooldownUntil && data.cooldownUntil > Date.now()) { alert("Бомба на перезарядке! Подожди " + formatTime(data.cooldownUntil - Date.now())); return; }
     if (!confirm("Вы уверены, что хотите запустить ядерную ракету?")) return;
 
     await sendTelegramMessage(`ВНИМАНИЕ! СГБ отправила ядерную бомбу в ${country}. Страну сотрёт с лица земли через 12 часов с начала запуска.`);
     const nukeEndTime = Date.now() + 12 * 60 * 60 * 1000;
-    $('launchNukeBtn').style.display = 'none';
-    $('cancelNukeBtn').style.display = 'block';
+    $('launchNukeBtn').style.display = 'none'; $('cancelNukeBtn').style.display = 'block';
     
-    await fetch(`${DB_URL}/nuke_data.json`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ active: true, endTime: nukeEndTime, country: country })
-    });
+    await fetch(`${DB_URL}/nuke_data.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ active: true, endTime: nukeEndTime, country: country }) });
 
     if (window.nukeInt) clearInterval(window.nukeInt);
     window.nukeInt = setInterval(async () => {
@@ -395,95 +377,108 @@ $('launchNukeBtn').onclick = async () => {
             clearInterval(window.nukeInt);
             const targetUserId = COUNTRY_USERS[country];
             if (targetUserId && !targetUserId.includes("ID_")) {
-                await fetch(`https://api.telegram.org/bot${TG_TOKEN}/banChatMember`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TG_GROUP_ID, user_id: targetUserId })
-                });
+                await fetch(`https://api.telegram.org/bot${TG_TOKEN}/banChatMember`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TG_GROUP_ID, user_id: targetUserId }) });
                 await sendTelegramMessage(`☢️ ЯДЕРНЫЙ УДАР! Игрок (${country}) был заблокирован в чате.`);
             }
-            $('nukeStatus').textContent = "💥 ВЗРЫВ! Ожидание сервера...";
-            $('nukeStatus').style.color = "red";
-        } else {
-            $('nukeStatus').textContent = `До взрыва: ${formatTime(left)}`;
-            $('nukeStatus').style.color = "#eab308";
-        }
+            $('nukeStatus').textContent = "💥 ВЗРЫВ! Ожидание сервера..."; $('nukeStatus').style.color = "red";
+        } else { $('nukeStatus').textContent = `До взрыва: ${formatTime(left)}`; $('nukeStatus').style.color = "#eab308"; }
     }, 1000);
 };
 
 $('cancelNukeBtn').onclick = async () => {
     if (!confirm("Точно отменить запуск?")) return;
-    clearInterval(window.nukeInt);
-    $('nukeStatus').textContent = "Запуск отменен.";
-    $('cancelNukeBtn').style.display = 'none';
-    $('launchNukeBtn').style.display = 'block';
+    clearInterval(window.nukeInt); $('nukeStatus').textContent = "Запуск отменен."; $('cancelNukeBtn').style.display = 'none'; $('launchNukeBtn').style.display = 'block';
     await sendTelegramMessage(`🛑 ВНИМАНИЕ! Запуск ядерной ракеты ОТМЕНЕН.`);
-    await fetch(`${DB_URL}/nuke_data.json`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ active: false, cooldownUntil: Date.now() + 48 * 3600000 })
-    });
+    await fetch(`${DB_URL}/nuke_data.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ active: false, cooldownUntil: Date.now() + 48 * 3600000 }) });
 };
 
-// --- ПАРОЛИ И ВИДЕО ДЛЯ СТРАН ---
+// --- ПАРОЛИ СТРАН ---
 const COUNTRY_KEYS = { "usa": "USA2026", "uk": "UK2026", "france": "FRANCE2026", "italy": "ITALY2026" };
 
 ['usa', 'uk', 'france', 'italy'].forEach(countryId => {
     const codeInput = $(countryId + 'CodeInput');
     const passwordSetup = $(countryId + 'PasswordSetup');
     
-    // Проверяем, есть ли сохраненный пароль в базе
     fetch(`${DB_URL}/passwords/${countryId}.json`).then(res => res.json()).then(savedPass => {
         if (savedPass) {
-            // Если есть свой пароль
-            codeInput.oninput = (e) => { 
-                if (e.target.value === savedPass) {
-                    // ВХОД БЕЗ ВИДЕО (свой пароль)
-                    document.body.classList.add('dark-mode');
-                    unlockCountry(countryId);
-                }
-            };
+            codeInput.oninput = (e) => { if (e.target.value === savedPass) { document.body.classList.add('dark-mode'); unlockCountry(countryId); } };
         } else {
-            // Если нет пароля - ждем заводской код
-            codeInput.oninput = (e) => { 
-                if (e.target.value === COUNTRY_KEYS[countryId]) {
-                    // ВХОД С ВИДЕО (заводской пароль)
-                    const videoSrc = COUNTRY_VIDEOS[countryId];
-                    playVideo(videoSrc, () => {
-                        document.body.classList.add('dark-mode');
-                        passwordSetup.style.display = 'block'; 
-                    });
-                }
-            };
+            codeInput.oninput = (e) => { if (e.target.value === COUNTRY_KEYS[countryId]) { playVideo(COUNTRY_VIDEOS[countryId], () => { document.body.classList.add('dark-mode'); passwordSetup.style.display = 'block'; }); } };
         }
     });
 
-    // Сохранение нового пароля
     $(countryId + 'SavePasswordBtn').onclick = async () => {
-        const p1 = $(countryId + 'NewPassword').value;
-        const p2 = $(countryId + 'ConfirmPassword').value;
-        if (p1.length < 3) return alert("Пароль слишком короткий!");
-        if (p1 !== p2) return alert("Пароли не совпадают!");
-
-        await fetch(`${DB_URL}/passwords/${countryId}.json`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(p1)
-        });
-        alert("Пароль сохранен! Теперь входите по нему.");
-        unlockCountry(countryId);
+        const p1 = $(countryId + 'NewPassword').value; const p2 = $(countryId + 'ConfirmPassword').value;
+        if (p1.length < 3) return alert("Пароль слишком короткий!"); if (p1 !== p2) return alert("Пароли не совпадают!");
+        await fetch(`${DB_URL}/passwords/${countryId}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(p1) });
+        alert("Пароль сохранен!"); unlockCountry(countryId);
     };
 
     function unlockCountry(id) {
-        $(id + 'SetupPanel').style.display = 'none';
-        $(id + 'SecretPanel').style.display = 'block';
-        const i1 = $(id + 'Info1');
-        const i2 = $(id + 'Info2');
-        if (i1) i1.style.display = 'none';
-        if (i2) i2.style.display = 'none';
+        $(id + 'SetupPanel').style.display = 'none'; $(id + 'SecretPanel').style.display = 'block';
+        const i1 = $(id + 'Info1'); const i2 = $(id + 'Info2');
+        if (i1) i1.style.display = 'none'; if (i2) i2.style.display = 'none';
         document.body.classList.add('dark-mode');
     }
 });
+
+// --- ДЕЙСТВИЯ СТРАН ---
+async function toggleTrade(country, selectId) {
+    const target = $(selectId).value;
+    const res = await fetch(`${DB_URL}/trades/${country}_${target}.json`);
+    const data = await res.json();
+    const isBlocked = data && data.blocked;
+    
+    await fetch(`${DB_URL}/trades/${country}_${target}.json`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ blocked: !isBlocked })
+    });
+
+    if (!isBlocked) {
+        sendTelegramMessage(`🚫 ${country} заблокировала торговлю с ${target}.`);
+    } else {
+        sendTelegramMessage(`✅ ${country} разблокировала торговлю с ${target}.`);
+    }
+}
+
+async function applySanctions(country, selectId) {
+    const target = $(selectId).value;
+    await sendTelegramMessage(`⚖️ ${country} ввела санкции против ${target}!`);
+}
+
+async function startSpy(country, selectId) {
+    const target = $(selectId).value;
+    const targetId = Object.keys(COUNTRY_USERS).find(k => k.includes(target) || target.includes(k));
+    const engTarget = targetId === "США" ? "usa" : targetId === "Великобританию" ? "uk" : targetId === "Францию" ? "france" : targetId === "Италию" ? "italy" : "russia";
+
+    await sendTelegramMessage(`🕵️ ВНИМАНИЕ! ${country} активировала шпионаж против ${target}!`);
+    
+    await fetch(`${DB_URL}/spy_target.json`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ attacker: country, target: engTarget, expiry: Date.now() + 60000 })
+    });
+}
+
+function enterSpyMode(targetId) {
+    document.body.classList.add('dark-mode');
+    $(targetId + 'SetupPanel').style.display = 'none';
+    $(targetId + 'SecretPanel').style.display = 'block';
+    const i1 = $(targetId + 'Info1'); const i2 = $(targetId + 'Info2');
+    if (i1) i1.style.display = 'none'; if (i2) i2.style.display = 'none';
+    alert("Режим шпионажа активирован! У вас 1 минута.");
+}
+
+// Проверка шпионажа при переходе на вкладки
+setInterval(async () => {
+    try {
+        const res = await fetch(`${DB_URL}/spy_target.json?t=${Date.now()}`);
+        const data = await res.json();
+        if (data && data.expiry > Date.now()) {
+            const spyBtn = $(data.target + 'SpyButton');
+            if (spyBtn) spyBtn.style.display = 'block';
+        }
+    } catch(e) {}
+}, 5000);
 </script>
 </body>
 </html>
